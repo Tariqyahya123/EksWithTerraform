@@ -43,9 +43,9 @@ Apply complete! Resources: 36 added, 0 changed, 0 destroyed.
 
 Outputs:
 
-auto-scaler-role-arn = "```arn:aws:iam::411310121956:role/cluster-auto-scaler-role```"
-eks-ingress-role-arn = "<mark>arn:aws:iam::411310121956:role/eks-ingress-role</mark>"
-instance_public_ip = "<mark>161.131.158.179</mark>"
+auto-scaler-role-arn = "arn:aws:iam::411310121956:role/cluster-auto-scaler-role"
+eks-ingress-role-arn = "arn:aws:iam::411310121956:role/eks-ingress-role"
+instance_public_ip = "161.131.158.179"
 ```
 
 
