@@ -44,7 +44,7 @@ terraform apply
 ```
 
 
-## Step 5: Note the auto-scaler-role-arn ,eks-ingress-role-arn and bastion host public ip which will be used to deploy required addons.
+## Step 5: Note the auto-scaler-role-arn, eks-ingress-role-arn and bastion host public ip which will be used to deploy required addons.
 
 Here is an example of how the stdout output will look like after terraform has been applied.
 ```bash
