@@ -98,7 +98,7 @@ Execute this helm command, enter the value of the eks-ingress-role noted from st
 ```bash
 cd EksWithTerraform
 
-helm upgrade -i aws-load-balancer-controller ./K8s-deployment-file/aws-load-balancer-controller \
+helm upgrade -i aws-load-balancer-controller ./K8s-deployment-files/aws-load-balancer-controller \
   -n kube-system \
   --set clusterName=eks-cluster \
   --set serviceAccount.annotations.eks\\.amazonaws\\.com\\/role-arn=ROLE_ARN_HERE
@@ -111,7 +111,7 @@ helm upgrade -i aws-load-balancer-controller ./K8s-deployment-file/aws-load-bala
 Execute the following helm command, replace the value of auto-scaler-role-arn in place of "ROLE_ARN_HERE"
 
 ```bash
-helm upgrade -i eks-auto-scaler ./K8s-deployment-file/eks-auto-scaler \
+helm upgrade -i eks-auto-scaler ./K8s-deployment-files/eks-auto-scaler \
 -n kube-system \ 
 --set autoScalerRoleArn=ROLE_ARN_HERE
 ```
@@ -122,7 +122,7 @@ helm upgrade -i eks-auto-scaler ./K8s-deployment-file/eks-auto-scaler \
 Execute the following helm command.
 
 ```bash
-helm upgrade -i wordpress ./K8s-deployment-file/wordpress-deployment -n default
+helm upgrade -i wordpress ./K8s-deployment-files/wordpress-deployment -n default
 ```
 
 
