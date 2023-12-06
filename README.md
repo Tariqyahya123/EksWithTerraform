@@ -125,4 +125,17 @@ Execute the following helm command.
 helm upgrade -i wordpress ./K8s-deployment-files/wordpress-deployment -n default
 ```
 
+## Step 13: Get the dns name of the ingress-loadbalancer and use it to access wordpress.
+
+
+Execute the following kubectl command to get the dns name of the ingress loadbalancer.
+
+```bash
+kubectl get ingress wordpress-ingress -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' && echo
+```
+
+Example output:
+```console
+k8s-publicloadbalance-1b5f5a824e-999999999.eu-west-3.elb.amazonaws.com
+```
 
