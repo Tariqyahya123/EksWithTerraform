@@ -23,7 +23,7 @@ git clone https://github.com/tariqyahya123/EksWithTerraform.git
 
 EksWithTerraform/terraform.tfvars contains the variables used for the deployment.
 
-Im using region eu-west-3 by default but you can change it to whichever region you like.
+Im using region eu-west-3 by default but you can change it to whichever region you like or use my default values.
 
 
 ## Step 3: Set the keypair to be used by bastion host.
