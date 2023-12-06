@@ -37,7 +37,7 @@ terraform apply
 ## Step 3: Note the auto-scaler-role-arn ,eks-ingress-role-arn and bastion host public ip which will be used to deploy required addons.
 
 Here is an example of how the stdout output will look like after terraform has been applied.
-```bash
+```console
 
 Apply complete! Resources: 36 added, 0 changed, 0 destroyed.
 
