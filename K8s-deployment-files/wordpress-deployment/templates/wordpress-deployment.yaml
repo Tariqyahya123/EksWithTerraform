@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{  .Values.wordpressDeploymentName }}
+  namespace: {{ .Values.namespace }} 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{  .Values.wordpressDeploymentName }}
+  template:
+    metadata:
+      labels:
+        app: {{  .Values.wordpressDeploymentName }}
+    spec:
+      containers:
+      - name: {{  .Values.wordpressDeploymentName }}
+        image: {{  .Values.wordpressDeploymentName }}
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: {{ .Values.databaseServiceName }}
+        - name: WORDPRESS_DB_USER
+          value: {{ .Values.wordpressDatabaseUserName }}
+        - name: WORDPRESS_DB_PASSWORD
+          value: {{ .Values.wordpressDatabaseSchemaPassword }}
+        - name: WORDPRESS_DB_NAME
+          value: {{ .Values.wordpressDatabaseSchemaName }}
+        ports:
+        - containerPort: 80
+

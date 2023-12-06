@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.databaseDeploymentName }}
+  namespace: {{ .Values.namespace }} 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.databaseDeploymentName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.databaseDeploymentName }}
+    spec:
+      containers:
+      - name: {{ .Values.databaseDeploymentName }}
+        image: mysql:latest
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: {{ .Values.databaseRootPassword }}
+        - name: MYSQL_DATABASE
+          value: {{ .Values.wordpressDatabaseSchemaName }}
+        - name: MYSQL_USER
+          value: {{ .Values.wordpressDatabaseUserName }}
+        - name: MYSQL_PASSWORD
+          value: {{ .Values.wordpressDatabaseSchemaPassword }}
+        ports:
+        - containerPort: 3306
+

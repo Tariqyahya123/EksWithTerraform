@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.wordpressIngressName }}
+  namespace: {{ .Values.namespace }} 
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/group.name: {{ .Values.wordpressIngressGroupName }}
+    alb.ingress.kubernetes.io/scheme: internet-facing
+spec:
+  rules:
+  - host: 
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Values.wordpressServiceName }}
+            port:
+              number: 80

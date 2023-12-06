@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.wordpressServiceName }}
+  namespace: {{ .Values.namespace }} 
+spec:
+  selector:
+    app: {{ .Values.wordpressDeploymentName }}
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort 

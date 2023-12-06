@@ -1,0 +1,28 @@
+wordpressDeploymentName: wordpress
+
+
+wordpressServiceName: wordpress-service
+
+
+wordpressIngressName: wordpress-ingress
+
+wordpressIngressGroupName: public-loadbalancer
+
+
+
+
+databaseDeploymentName: mysql
+
+databaseServiceName: mysql-service
+
+
+databaseRootPassword: password
+
+wordpressDatabaseSchemaName: wordpress
+
+wordpressDatabaseUserName: wordpress
+
+wordpressDatabaseSchemaPassword: wordpress
+
+
+namespace: 

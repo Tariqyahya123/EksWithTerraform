@@ -1,0 +1,14 @@
+deploymentName: cluster-autoscaler
+
+
+serviceAccountName: cluster-autoscaler
+
+roleName: cluster-autoscaler
+
+roleBindingName: cluster-autoscaler
+
+clusterRoleName: cluster-autoscaler
+
+clusterRoleBindingName: cluster-autoscaler
+
+autoScalerRoleArn: 
