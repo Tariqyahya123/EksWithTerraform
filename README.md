@@ -100,7 +100,7 @@ cd EksWithTerraform
 
 helm upgrade -i aws-load-balancer-controller ./K8s-deployment-file/aws-load-balancer-controller \
   -n kube-system \
-  --set clusterName=my-cluster \
+  --set clusterName=eks-cluster \
   --set serviceAccount.annotations.eks\\.amazonaws\\.com\\/role-arn=ROLE_ARN_HERE
   --set serviceAccount.name=aws-load-balancer-controller 
 ```
