@@ -8,6 +8,19 @@ Follow these steps to deploy EKS with pre-configured settings.
 &ensp;
 &ensp;
 
+
+
+## Prerequisites:
+
+- Make sure you have Terraform installed.
+
+- Requirments like helm, kubectl and aws cli which will be needed in the bastion host, will be auto installed on the bastion host using aws user-data.
+
+&ensp;
+&ensp;
+
+
+
 ## Step 0: Configure your AWS credentials.
 
 
@@ -69,11 +82,11 @@ instance_public_ip = "161.131.158.179"
 
 In this example the data to note is: 
 
-arn:aws:iam::YOUR-ACCOUNT-ID:role/cluster-auto-scaler-role
+- arn:aws:iam::YOUR-ACCOUNT-ID:role/cluster-auto-scaler-role
 
-arn:aws:iam::YOUR-ACCOUNT-ID:role/eks-ingress-role
+- arn:aws:iam::YOUR-ACCOUNT-ID:role/eks-ingress-role
 
-161.131.158.179
+- 161.131.158.179
 
 These are values required later.
 
