@@ -88,7 +88,7 @@ Use this command to pull the kubeconfig file.
 
 
 ```bash
-aws eks update-kubeconfig -- region eu-west-3 --name eks-cluster
+aws eks update-kubeconfig --region eu-west-3 --name eks-cluster
 ```
 
 If you made changes to the region and cluster name variables in the EksWithTerraform/terraform.tfvars file, then adjust the above commands to your needs.
