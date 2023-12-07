@@ -145,6 +145,8 @@ git clone https://github.com/tariqyahya123/EksWithTerraform.git
 Execute the following helm command, replace the value of auto-scaler-role-arn from step 5 in place of "ROLE_ARN_HERE"
 
 ```bash
+cd EksWithTerraform
+
 helm upgrade -i eks-auto-scaler ./K8s-deployment-files/eks-auto-scaler \
   -n kube-system \
   --set autoScalerRoleArn=$ROLE_ARN_HERE
@@ -157,8 +159,6 @@ helm upgrade -i eks-auto-scaler ./K8s-deployment-files/eks-auto-scaler \
 Execute this helm command, enter the value of the eks-ingress-role noted from step 5 in place of "ROLE_ARN_HERE"
 
 ```bash
-cd EksWithTerraform
-
 helm upgrade -i aws-load-balancer-controller ./K8s-deployment-files/aws-load-balancer-controller \
   -n kube-system \
   --set clusterName=eks-cluster \
