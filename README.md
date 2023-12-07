@@ -130,7 +130,7 @@ cd EksWithTerraform
 helm upgrade -i aws-load-balancer-controller ./K8s-deployment-files/aws-load-balancer-controller \
   -n kube-system \
   --set clusterName=eks-cluster \
-  --set serviceAccount.annotations.eks\\.amazonaws\\.com\\/role-arn=ROLE_ARN_HERE \
+  --set serviceAccount.annotations.eks\\.amazonaws\\.com\\/role-arn=$ROLE_ARN_HERE \
   --set serviceAccount.name=aws-load-balancer-controller 
 ```
 
@@ -143,7 +143,7 @@ Execute the following helm command, replace the value of auto-scaler-role-arn fr
 ```bash
 helm upgrade -i eks-auto-scaler ./K8s-deployment-files/eks-auto-scaler \
   -n kube-system \
-  --set autoScalerRoleArn=ROLE_ARN_HERE
+  --set autoScalerRoleArn=$ROLE_ARN_HERE
 ```
 
 &ensp;
@@ -217,5 +217,32 @@ fi
 Example output:
 ```console
 http://k8s-publicloadbalance-1b5f5a824e-999999999.eu-west-3.elb.amazonaws.com
+```
+
+&ensp;
+&ensp;
+&ensp;
+
+
+
+# Test the autoscaling feature of the cluster.
+&ensp;
+&ensp;
+## Step 1: Scale out the wordpress deployment to 50 replicas.
+
+```bash
+kubectl scale deployment wordpress --replicas=50
+```
+&ensp;
+Expected output:
+```console
+deployment.apps/wordpress scaled
+```
+
+
+## Step 2: Watch the nodes scale out from 3 nodes to 5 nodes.
+
+```bash
+kubectl get nodes --watch
 ```
 
