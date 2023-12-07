@@ -160,6 +160,7 @@ helm upgrade -i wordpress ./K8s-deployment-files/wordpress-deployment -n default
 
 ## (OPTIONAL) Step 13: Make sure your ingress load balancer has been provisioned successfuly.
 
+This is a bash command that will repeatedly check the status of your ingress load balancer untill it is active and ready to recieve traffic.
 
 ```bash
 while true; do
@@ -175,8 +176,26 @@ while true; do
     sleep 1  # Optional: Add a delay to avoid constant checking
 done
 ```
+&ensp;
+
+Expected output:
+```console
+Still provisioning
+Still provisioning
+Still provisioning
+Still provisioning
+Still provisioning
+Still provisioning
+Still provisioning
+Still provisioning
+Still provisioning
+Ingress loadbalancer is active!
+```
+
 
 Make sure region value is adjusted to your requirement if the default region values in the EksWithTerraform/terraform.tfvars were changed.
+
+&ensp;
 
 ## Step 12: Get the dns name of the ingress-loadbalancer and use it to access wordpress.
 
