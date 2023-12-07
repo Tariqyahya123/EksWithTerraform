@@ -226,9 +226,10 @@ Give it a few seconds after Step 11 was executed.
 
 ```bash
 hostname=$(kubectl get ingress wordpress-ingress -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' 2>/dev/null)
+
 if [ -n "$hostname" ]; then
     result="http://$hostname"
-    echo $result
+    echo -e "\n\n$result"
 else
     echo "Hostname is empty"
 fi
