@@ -8,6 +8,19 @@ Follow these steps to deploy EKS with pre-configured settings.
 &ensp;
 &ensp;
 
+
+
+## Prerequisites:
+
+- Make sure you have Terraform installed.
+
+- Requirments like helm, kubectl and aws cli which will be needed in the bastion host, will be auto installed on the bastion host using aws user-data.
+
+&ensp;
+&ensp;
+
+
+
 ## Step 0: Configure your AWS credentials.
 
 
@@ -69,16 +82,18 @@ instance_public_ip = "161.131.158.179"
 
 In this example the data to note is: 
 
-arn:aws:iam::YOUR-ACCOUNT-ID:role/cluster-auto-scaler-role
+- arn:aws:iam::YOUR-ACCOUNT-ID:role/cluster-auto-scaler-role
 
-arn:aws:iam::YOUR-ACCOUNT-ID:role/eks-ingress-role
+- arn:aws:iam::YOUR-ACCOUNT-ID:role/eks-ingress-role
 
-161.131.158.179
+- 161.131.158.179
 
 These are values required later.
+
 &ensp;
 
 ## Step 6: Log in to the bastion host using the public ip noted in step 5.
+&ensp;
 &ensp;
 ## Step 7: Configure your AWS credentials on the bastion host and pull the kube-config file.
 
@@ -86,7 +101,7 @@ Use this command to pull the kubeconfig file.
 
 
 ```bash
-aws eks update-kubeconfig -- region eu-west-3 --name eks-cluster
+aws eks update-kubeconfig --region eu-west-3 --name eks-cluster
 ```
 
 If you made changes to the region and cluster name variables in the EksWithTerraform/terraform.tfvars file, then adjust the above commands to your needs.
@@ -111,7 +126,7 @@ cd EksWithTerraform
 helm upgrade -i aws-load-balancer-controller ./K8s-deployment-files/aws-load-balancer-controller \
   -n kube-system \
   --set clusterName=eks-cluster \
-  --set serviceAccount.annotations.eks\\.amazonaws\\.com\\/role-arn=ROLE_ARN_HERE
+  --set serviceAccount.annotations.eks\\.amazonaws\\.com\\/role-arn=ROLE_ARN_HERE \
   --set serviceAccount.name=aws-load-balancer-controller 
 ```
 
@@ -123,8 +138,8 @@ Execute the following helm command, replace the value of auto-scaler-role-arn fr
 
 ```bash
 helm upgrade -i eks-auto-scaler ./K8s-deployment-files/eks-auto-scaler \
--n kube-system \ 
---set autoScalerRoleArn=ROLE_ARN_HERE
+  -n kube-system \
+  --set autoScalerRoleArn=ROLE_ARN_HERE
 ```
 
 &ensp;
@@ -142,6 +157,8 @@ helm upgrade -i wordpress ./K8s-deployment-files/wordpress-deployment -n default
 
 
 Execute the following kubectl command to get the dns name of the ingress loadbalancer.
+
+Give it a few seconds after Step 11 was executed.
 
 ```bash
 kubectl get ingress wordpress-ingress -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' && echo
