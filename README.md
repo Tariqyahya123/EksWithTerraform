@@ -97,6 +97,13 @@ These are values required later.
 &ensp;
 
 ## Step 6: Log in to the bastion host using the public ip noted in step 5.
+
+&ensp;
+
+
+- The username for the bastion host is: ubuntu
+
+
 &ensp;
 &ensp;
 ## Step 7: Configure your AWS credentials on the bastion host and pull the kube-config file.
@@ -158,7 +165,7 @@ helm upgrade -i wordpress ./K8s-deployment-files/wordpress-deployment -n default
 &ensp;
 
 
-## (OPTIONAL) Step 13: Make sure your ingress load balancer has been provisioned successfuly.
+## Step 12: Make sure your ingress load balancer has been provisioned successfuly.
 
 This is a bash command that will repeatedly check the status of your ingress load balancer untill it is active and ready to recieve traffic.
 
@@ -197,7 +204,7 @@ Make sure region value is adjusted to your requirement if the default region val
 
 &ensp;
 
-## Step 12: Get the dns name of the ingress-loadbalancer and use it to access wordpress.
+## Step 13: Get the dns name of the ingress-loadbalancer and use it to access wordpress.
 
 
 Execute the following kubectl command to get the dns name of the ingress loadbalancer.
@@ -238,11 +245,25 @@ Expected output:
 ```console
 deployment.apps/wordpress scaled
 ```
-
+&ensp;
 
 ## Step 2: Watch the nodes scale out from 3 nodes to 5 nodes.
 
 ```bash
 kubectl get nodes --watch
+```
+
+&ensp;
+
+## How the scale in process works:
+
+The cluster automatically scales down when the number of replicas can be accomodated by 3 nodes.
+
+Keep in mind the the scale down process takes sometime.
+
+To scale down the cluster, reduce the replicas of the wordpress deployment to 1 using this command:
+
+```bash
+kubectl scale deployment wordpress --replicas=1
 ```
 
