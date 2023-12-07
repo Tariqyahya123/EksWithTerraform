@@ -281,3 +281,35 @@ To scale down the cluster, reduce the replicas of the wordpress deployment to 1 
 kubectl scale deployment wordpress --replicas=1
 ```
 
+
+&ensp;
+&ensp;
+
+
+# Resource clean-up guide:
+&ensp;
+
+
+## Step 1: Uninstall all helm charts:
+
+Execute this command from the bastion host.
+
+```bash
+helm uninstall wordpress
+
+helm uninstall aws-load-balancer-controller -n kube-system
+
+helm uninstall eks-auto-scaler -n kube-system
+```
+
+&ensp;
+
+
+## Step 2: Terraform Destroy:
+
+Execute this command from the machine where terraform apply was done earlier and make you are in the EksWithTerraform directory.
+
+
+```bash
+terraform destory
+```
