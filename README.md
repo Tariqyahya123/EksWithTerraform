@@ -19,7 +19,7 @@ git clone https://github.com/tariqyahya123/EksWithTerraform.git
 ```
 
 
-# (OPTIONAL) Step 2: Change default region and Availability Zones.
+## (OPTIONAL) Step 2: Change default region and Availability Zones.
 
 EksWithTerraform/terraform.tfvars contains the variables used for the deployment.
 
