@@ -167,13 +167,13 @@ while true; do
     status=$(aws elbv2 describe-load-balancers --query "LoadBalancers[?starts_with(LoadBalancerName, 'k8s')].State.Code" --output text --region eu-west-3)  # Replace with your actual command
    if [ -z "$status" ]; then
         echo "No ingress loadbalancer found."
-        break
+        break # Exit the loop if loadbalancer doesn't exist
     elif [ "$status" = "active" ]; then
         echo "Ingress loadbalancer is active!"
         break  # Exit the loop when the output is "active"
     fi
     echo "Still provisioning"
-    sleep 1  # Optional: Add a delay to avoid constant checking
+    sleep 1  # Add a delay to avoid constant checking
 done
 ```
 &ensp;
