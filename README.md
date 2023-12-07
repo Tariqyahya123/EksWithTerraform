@@ -14,6 +14,8 @@ Follow these steps to deploy EKS with pre-configured settings.
 
 - Make sure you have Terraform installed.
 
+- Have an AWS keypair already created, since an existing keypair will be needed in step 3.
+
 - Requirments like helm, kubectl and aws cli which will be needed in the bastion host, will be auto installed on the bastion host using aws user-data.
 
 &ensp;
@@ -48,6 +50,8 @@ If you happen to change the region make sure you change the Availbility zones as
 &ensp;
 
 ## Step 3: Set the keypair to be used by bastion host.
+
+Make sure you have an already existing keypair in your aws account, since this terraform code will not create a key pair. It will use an already existing keypair from your account.
 
 Replace "PLACEHOLDER" in line 22 in EksWithTerraform/bastionhost.tf with the name of your key pair.
 
@@ -152,6 +156,27 @@ Execute the following helm command.
 helm upgrade -i wordpress ./K8s-deployment-files/wordpress-deployment -n default
 ```
 &ensp;
+
+
+## (OPTIONAL) Step 13: Make sure your ingress load balancer has been provisioned successfuly.
+
+
+```bash
+while true; do
+    status=$(aws elbv2 describe-load-balancers --query "LoadBalancers[?starts_with(LoadBalancerName, 'k8s')].State.Code" --output text --region eu-west-3)  # Replace with your actual command
+   if [ -z "$status" ]; then
+        echo "No ingress loadbalancer found."
+        break
+    elif [ "$status" = "active" ]; then
+        echo "Ingress loadbalancer is active!"
+        break  # Exit the loop when the output is "active"
+    fi
+    echo "Still provisioning"
+    sleep 1  # Optional: Add a delay to avoid constant checking
+done
+```
+
+Make sure region value is adjusted to your requirement if the default region values in the EksWithTerraform/terraform.tfvars were changed.
 
 ## Step 12: Get the dns name of the ingress-loadbalancer and use it to access wordpress.
 
