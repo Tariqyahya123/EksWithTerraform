@@ -161,11 +161,17 @@ Execute the following kubectl command to get the dns name of the ingress loadbal
 Give it a few seconds after Step 11 was executed.
 
 ```bash
-kubectl get ingress wordpress-ingress -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' && echo
+hostname=$(kubectl get ingress wordpress-ingress -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' 2>/dev/null)
+if [ -n "$hostname" ]; then
+    result="http://$hostname"
+    echo $result
+else
+    echo "Hostname is empty"
+fi
 ```
 
 Example output:
 ```console
-k8s-publicloadbalance-1b5f5a824e-999999999.eu-west-3.elb.amazonaws.com
+http://k8s-publicloadbalance-1b5f5a824e-999999999.eu-west-3.elb.amazonaws.com
 ```
 
