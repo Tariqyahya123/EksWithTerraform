@@ -61,6 +61,3 @@ resource "aws_iam_role_policy_attachment" "cluster-auto-scaler-attack" {
   policy_arn = aws_iam_policy.cluster-auto-scaler-policy.arn
 }
 
-output "auto-scaler-role-arn" {
-  value = aws_iam_role.cluster-auto-scaler-role.arn
-}

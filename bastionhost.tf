@@ -71,7 +71,3 @@ resource "aws_security_group" "allow_ssh_bastion" {
 
 
 
-output "instance_public_ip" {
-  description = "Public IP address of the EC2 instance"
-  value       = aws_instance.bastion-host.public_ip
-}

@@ -284,6 +284,3 @@ resource "aws_iam_role_policy_attachment" "eks-ingress-attach" {
   policy_arn = aws_iam_policy.eks-ingress-policy.arn
 }
 
-output "eks-ingress-role-arn" {
-  value = aws_iam_role.ingress-eks-role.arn
-}
