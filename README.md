@@ -48,6 +48,7 @@ sed -i 's/key_name = "PLACEHOLDER"/key_name = "ENTER THE NAME OF YOUR KEY PAIR H
 
 ## Step 4: Apply the terraform code.
 ```bash
+terraform init
 terraform apply
 ```
 &ensp;
