@@ -76,9 +76,11 @@ arn:aws:iam::YOUR-ACCOUNT-ID:role/eks-ingress-role
 161.131.158.179
 
 These are values required later.
+
 &ensp;
 
 ## Step 6: Log in to the bastion host using the public ip noted in step 5.
+&ensp;
 &ensp;
 ## Step 7: Configure your AWS credentials on the bastion host and pull the kube-config file.
 
