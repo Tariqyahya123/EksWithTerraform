@@ -125,8 +125,8 @@ Execute the following helm command, replace the value of auto-scaler-role-arn fr
 
 ```bash
 helm upgrade -i eks-auto-scaler ./K8s-deployment-files/eks-auto-scaler \
--n kube-system \ 
---set autoScalerRoleArn=ROLE_ARN_HERE
+  -n kube-system \
+  --set autoScalerRoleArn=ROLE_ARN_HERE
 ```
 
 &ensp;
@@ -144,6 +144,8 @@ helm upgrade -i wordpress ./K8s-deployment-files/wordpress-deployment -n default
 
 
 Execute the following kubectl command to get the dns name of the ingress loadbalancer.
+
+Give it a few seconds after Step 11 was executed.
 
 ```bash
 kubectl get ingress wordpress-ingress -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' && echo
