@@ -19,11 +19,13 @@ git clone https://github.com/tariqyahya123/EksWithTerraform.git
 ```
 
 
-# Step 2: Enter your region and availbility zones in the EksWithTerraform/terraform.tfvars file.
+# (OPTIONAL) Step 2: Change default region and Availability Zones.
 
 EksWithTerraform/terraform.tfvars contains the variables used for the deployment.
 
 Im using region eu-west-3 by default but you can change it to whichever region you like or use my default values.
+
+If you happen to change the region make sure you change the Availbility zones as well.
 
 
 ## Step 3: Set the keypair to be used by bastion host.
