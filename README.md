@@ -95,6 +95,17 @@ In this example the data to note is:
 These are values required later.
 
 &ensp;
+&ensp;
+
+Use this command to output the required data to a file called output.txt
+
+```bash
+terraform output | grep -E "auto-scaler-role-arn|eks-ingress-role-arn|instance_public_ip" | awk -F" = " '{gsub(/"/, "", $2); print $2}' > output.txt
+```
+
+
+
+&ensp;
 
 ## Step 6: Log in to the bastion host using the public ip noted in step 5.
 
@@ -127,7 +138,21 @@ git clone https://github.com/tariqyahya123/EksWithTerraform.git
 
 &ensp;
 
-## Step 9: Deploy the aws-load-balancer-controller helm chart.
+
+
+## Step 9: Deploy the eks-auto-scaler helm chart.
+
+Execute the following helm command, replace the value of auto-scaler-role-arn from step 5 in place of "ROLE_ARN_HERE"
+
+```bash
+helm upgrade -i eks-auto-scaler ./K8s-deployment-files/eks-auto-scaler \
+  -n kube-system \
+  --set autoScalerRoleArn=$ROLE_ARN_HERE
+```
+
+&ensp;
+
+## Step 10: Deploy the aws-load-balancer-controller helm chart.
 
 Execute this helm command, enter the value of the eks-ingress-role noted from step 5 in place of "ROLE_ARN_HERE"
 
@@ -139,18 +164,6 @@ helm upgrade -i aws-load-balancer-controller ./K8s-deployment-files/aws-load-bal
   --set clusterName=eks-cluster \
   --set serviceAccount.annotations.eks\\.amazonaws\\.com\\/role-arn=$ROLE_ARN_HERE \
   --set serviceAccount.name=aws-load-balancer-controller 
-```
-
-&ensp;
-
-## Step 10: Deploy the eks-auto-scaler helm chart.
-
-Execute the following helm command, replace the value of auto-scaler-role-arn from step 5 in place of "ROLE_ARN_HERE"
-
-```bash
-helm upgrade -i eks-auto-scaler ./K8s-deployment-files/eks-auto-scaler \
-  -n kube-system \
-  --set autoScalerRoleArn=$ROLE_ARN_HERE
 ```
 
 &ensp;
