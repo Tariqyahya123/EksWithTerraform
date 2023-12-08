@@ -240,6 +240,64 @@ This configuration deploys and manages worker nodes for an EKS cluster, ensuring
     - Allows inbound SSH traffic from anywhere and unrestricted outbound traffic.
 
 
+## autoscaler.tf
+
+- This Terraform configuration:
+
+    - Defines the data "aws_iam_policy_document" block to create a trust policy for the IAM role assumed by the Cluster Auto Scaler Add-on.
+    - Specifies conditions for assuming the role based on the OpenID Connect (OIDC) provider's URL and the service account within the Kubernetes cluster.
+    - Creates the resource "aws_iam_policy" block to define the Cluster Auto Scaler's IAM policy, allowing specific actions on Auto Scaling Groups and EC2 instances.
+    - Sets up the resource "aws_iam_role" block for the IAM role named "cluster-auto-scaler-role," using the trust policy from the data block.
+    - Attaches the IAM policy to the IAM role using the resource "aws_iam_role_policy_attachment" block, linking the "cluster-auto-scaler-role" with the defined policy.
+
+
+- This configuration establishes an IAM role and policy for the Cluster Auto Scaler, enabling it to perform designated actions on the Worker Nodes Auto Scaling Group and Nodes themself.
+
+## ingress.tf
+
+
+- This Terraform configuration:
+
+    - Utilizes the data "aws_iam_policy_document" block to create a trust policy for the IAM role assumed by the AWS Load Balancer Controller Add-on.
+    - Defines conditions for assuming the role based on the OpenID Connect (OIDC) provider's URL, ensuring it matches the service account within the Kubernetes cluster and the expected audience.
+    - Creates the resource "aws_iam_policy" block, specifying the IAM policy named "eks-ingress-policy," granting permissions for various AWS services related to load balancing.
+    - Establishes the resource "aws_iam_role" block for the IAM role named "eks-ingress-role," incorporating the trust policy from the data block.
+    - Attaches the IAM policy to the IAM role through the resource "aws_iam_role_policy_attachment" block, linking the "eks-ingress-role" with the defined policy.
+
+
+- This configuration sets up an IAM role and policy for the AWS Load Balancer Controller, allowing it to perform actions related to creating and managing Elastic Load Balancers (ELBs).
+
+
+## variables.tf
+
+
+- This terraform configuration contains definition of these Terraform variables:
+
+    - region: Represents the AWS region where resources will be created. It is of type string.
+    
+    - availability_zones: A list of availability zones for resource distribution. It is of type list of strings.
+    
+    - public_subnet_cidr_blocks: Defines the CIDR blocks for the public subnets. It is of type list of strings.
+    
+    - private_subnet_cidr_blocks: Specifies the CIDR blocks for the private subnets. It is of type list of strings.
+    
+    - vpc_cidr_block: Represents the CIDR block for the Virtual Private Cloud (VPC). It is of type string.
+    
+    - eks-cluster-name: Denotes the name of the Amazon EKS (Elastic Kubernetes Service) cluster. It is of type string.
+    
+    - bastion_ami_name: Represents the name of the Amazon Machine Image (AMI) used for the bastion host. It is of type string.
+    
+    - bastion_instance_type: Specifies the instance type for the bastion host. It is of type string.
+
+- These variables provide flexibility and customization options when deploying infrastructure using Terraform. Users can input values for these variables to tailor the configuration to their specific requirements, such as defining the AWS region, subnet CIDR blocks, EKS cluster name, and characteristics of the bastion host.
+
+
+
+
+
+
+
+
 # Deployment Guide for EKS with Configurations
 
 Follow these steps to deploy EKS with pre-configured settings.
