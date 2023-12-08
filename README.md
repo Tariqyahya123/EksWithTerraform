@@ -18,7 +18,7 @@ click here to go directly to the deployment guide.
 
 - The workers node group was deployed on 3 subnets each in a seperate Availbility Zone to ensure the highest level of availbility.
 
-- (DOUBLE CHECK THIS, CHECK OUT THE SECURITY GROUP OF THE WORKER NODES.) All the work nodes are deployed on private subnets which ensures that these nodes are only accessable privately from inside the VPC, which allows for better security. 
+- All the work nodes are deployed on private subnets which ensures that these nodes are only accessable privately from inside the VPC, which allows for better security. 
 
 - The endpoint of the control plane can only be accessed private from inside the VPC cluster as well, furthermore the security group attached to the control plane only allows for communication from the bastion host, this also allows for better access control and security.
 
@@ -47,7 +47,7 @@ click here to go directly to the deployment guide.
   
 ## Resiliency and scalability:
 
-- (MAKE SURE THAT NODES ARE DEPLOYED TO ALL 3 SUBNETS AND AREN'T GROUPED UP) 3 Nodes are deployed each to its own subnet which means that each node is deployed in a seperate Availbility Zones, which allows for resiliency incase one of the Availbility Zones goes down. In this case the workload deployed on node that went down is migrated to the two other nodes.
+- 3 Nodes are deployed each to its own subnet which means that each node is deployed in a seperate Availbility Zones, which allows for resiliency incase one of the Availbility Zones goes down. In this case the workload deployed on node that went down is migrated to the two other nodes.
 
 - Auto scaling of the worker nodegroup from 3 to a maximum of 5 is done by utilizing the [Cluster Autoscaler Add-on](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md). This allows for automatic scaling out and scaling in based on the requirements of the workload.
 
