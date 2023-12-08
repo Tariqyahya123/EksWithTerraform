@@ -52,6 +52,8 @@ click here to go directly to the deployment guide.
 
 - By utiziling the AWS Load Balancer Add-on and ingress resources, it allows for the deployed ALB load balancer to be used by multiple deployment instead of the default EKS behaviour which is that each deployment would have a seperate load balancer. This reduces cost significantly.
 
+- Bastion host instance type is "t2.micro" which is free tier eligible and since bastion hosts don't require much resources, it is a perfect fit.
+
 
 
 &ensp;
@@ -81,13 +83,161 @@ click here to go directly to the deployment guide.
 
 ## provider.tf
 
+- This Terraform configuration file specifies that it requires the AWS provider version 5.29.0 and sets the AWS region dynamically based on the variable (var.region).
+
 ## vpc.tf
 
-- Contains VPC resource and it's configuration
+- This Terraform configuration creates the VPC named "eks-vpc" with a specified CIDR block, default tenancy, DNS hostname support, and associated tags.
 
-## 
+## subnets.tf
 
 
+- This Terraform configuration creates the subnets in the VPC, defining private and public subnets across different availability zones. Each subnet is tagged with specific roles for internal and external load balancing.
+
+- Private Subnets (A, B, C):
+
+    - Associated with the VPC.
+    - Configured with specified CIDR blocks and availability zones.
+    - Tagged with the name and role for internal Elastic Load Balancers (ELB).
+
+
+- Public Subnets (A, B, C):
+
+    - Associated with the same VPC, CIDR blocks, and availability zones.
+    - Configured to map public IPs on launch.
+    - Tagged with the name and role for external Elastic Load Balancers (ELB).
+
+## routes.tf
+
+- This Terraform configuration defines route tables and associations for private and public subnets in the VPC.
+
+- Private Route Table (private-rt):
+
+    - Associated with the VPC.
+    - Has a default route to a NAT gateway for internet access.
+    - Tagged with the name "private-rt."
+
+- Public Route Table (public-rt):
+
+    - Associated with the same VPC.
+    - Has a default route to an internet gateway for public access.
+    - Tagged with the name "public-rt."
+    
+- Route Table Associations:
+
+    - Associates each private and public subnet with its corresponding route table.
+    - Ensures proper routing for the private and public subnets in different availability zones.
+
+
+## nat.tf
+
+
+- This Terraform configuration creates an Elastic IP (EIP) and the NAT Gateway.
+
+- Elastic IP (EIP):
+
+    - Associated with the "vpc" domain.
+    - Tagged with the name "nat-eip."
+  
+- NAT Gateway:
+
+    - Uses the EIP created above.
+    - Associated with the public subnet "public-subnet-A."
+    - Tagged with the name "eks-nat."
+    - Depends on the existence of the Internet Gateway "eks-igw" (waits for it to be created before creating the NAT Gateway).
+
+
+## igw.tf
+
+- This Terraform configuration creates an Internet Gateway (IGW):
+
+- Internet Gateway (IGW):
+    - Associated with the VPC.
+    - Tagged with the name "eks-internet-gateway."
+
+## eks.tf 
+
+- This Terraform configuration sets up the EKS (Elastic Kubernetes Service) cluster along with related resources:
+
+- IAM Role:
+
+   -  Named "eks-role."
+    - Has a policy attachment for "Amazon EKS Cluster" Policy.
+    - Tagged with the name "eks-role."
+
+- Security Group:
+
+    - Named "allow_bastion_host_traffic_to_eks_api_server."
+    - Allows TLS inbound traffic from the bastion host.
+    - Allows all outbound traffic.
+
+  
+- EKS Cluster:
+
+    - Named based on the variable "eks-cluster-name."
+    - Uses the IAM role "eks-role."
+    - Deployed in the VPC, allowing only private access to the EKS API server.
+    - Security group configured to allow traffic from the "allow_bastion_host_traffic_to_eks_api_server" security group.
+
+
+## nodes.tf 
+
+- This Terraform configuration sets up the EKS worker node group:
+
+- IAM Role for Worker Nodes:
+
+    - Named "eks-workers-role."
+    - Allows EC2 service to assume the role.
+    - Tagged with the name "eks-workers-role."
+
+
+- IAM Role Policy Attachments:
+
+    - Attached policies for "Amazon EKS Worker Node" Policy, "Amazon EKS CNI" Policy, and "Amazon ECR ReadOnly" Policy.
+
+
+- EKS Node Group for Worker Nodes:
+
+    - Associated with the EKS cluster "eks-cluster."
+    - Named "worker-nodes."
+    - Uses the IAM role "eks-workers-role."
+    - Deployed in private subnets A, B, and C.
+    - Configured with desired, max, and min sizes for scaling.
+    - Uses "t3.small" instance types with "ON_DEMAND" capacity type.
+    - Depends on the IAM role policy attachments.
+ 
+  
+This configuration deploys and manages worker nodes for an EKS cluster, ensuring they have the necessary IAM roles and policies attached.
+
+
+## iam-oidc.tf
+
+
+- This Terraform configuration Creates an OpenID Connect (OIDC) provider:
+
+    - Uses the data "tls_certificate" block to retrieve the TLS certificate information from the OIDC issuer URL of the EKS cluster.
+    - Uses resource "aws_iam_openid_connect_provider" block.
+    - The provider's URL is set to the OIDC issuer URL of the EKS cluster.
+    - Specifies a client ID list, with "sts.amazonaws.com" included.
+    - Sets the thumbprint list using the SHA-1 fingerprint of the TLS certificate obtained from the OIDC issuer.
+
+
+- In summary, this configuration establishes an OIDC provider in IAM, linking it to the EKS cluster's OIDC issuer URL and configuring necessary details for authentication and authorization.
+
+
+## bastionhost.tf
+
+- This is what bastionhost.tf does:
+
+    - Uses the data "aws_ami" block to fetch the latest Ubuntu Amazon Machine Image (AMI) owned by "amazon" with a specified name.
+    - Creates an EC2 instance as a bastion host using the resource "aws_instance" block.
+    - Specifies the AMI using the data source result.
+    - Sets the instance type, subnet, and associates a public IP address.
+    - Defines a user data script to install kubectl, awscli, and Helm on the bastion host.
+    - Associates the instance with a security group allowing SSH traffic.
+    - Tags the instance with the name "bastion-host."
+    - Creates a security group named "allow_ssh_bastion" using the resource "aws_security_group" block.
+    - Allows inbound SSH traffic from anywhere and unrestricted outbound traffic.
 
 
 # Deployment Guide for EKS with Configurations
