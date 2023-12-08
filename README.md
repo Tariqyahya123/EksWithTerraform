@@ -1,5 +1,94 @@
 # EksWithTerraform
 
+click here to go directly to the deployment guide.
+
+
+# Brief of the project and the choices made.
+
+&ensp;
+
+## Networking
+
+- The workers node group was deployed on 3 subnets each in a seperate Availbility Zone to ensure the highest level of availbility.
+
+- (DOUBLE CHECK THIS, CHECK OUT THE SECURITY GROUP OF THE WORKER NODES.) All the work nodes are deployed on private subnets which ensures that these nodes are only accessable privately from inside the VPC, which allows for better security. 
+
+- The endpoint of the control plane can only be accessed private from inside the VPC cluster as well, furthermore the security group attached to the control plane only allows for communication from the bastion host, this also allows for better access control and security.
+
+- There are also three public subnets, used for the bastion host and NAT Gateway. The bastion host is publicly accessable.
+
+- DNS hostname and DNS resolution were enabled since in the VPC it is a requirement by EKS.
+
+- The workloads ran on the cluster are accessable through a public Ingress ALB which has been deployed by the help of the [AWS Load Balancer Add-on](https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html). The AWS Load Balancer Controller is a tool designed to manage AWS Elastic Load Balancers (ELBs) for Kubernetes clusters. It simplifies the process of integrating Kubernetes Ingress controllers - which use layer 7 loadbalancing - with the AWS layer 7 loadbalancing offering (ALB - Application load balancer)
+
+- The use of AWS Load Balancer Add-on allows for easier routing through information present in the request itself.
+
+&ensp;
+
+
+## Security
+
+- AWS recommended IAM Roles were used to adhere to the least privilege security principle.
+
+- Public ip's were only allowed for bastion host and Ingress Load-balancer since public access is crucial for these components.
+
+- OIDC provider is used to grant roles to service accounts belonging the AWS Load Balancer Add-on as well as the Cluster-Autoscaler-Add-on
+
+
+&ensp;
+
+  
+## Resiliency and scalability:
+
+- (MAKE SURE THAT NODES ARE DEPLOYED TO ALL 3 SUBNETS AND AREN'T GROUPED UP) 3 Nodes are deployed each to its own subnet which means that each node is deployed in a seperate Availbility Zones, which allows for resiliency incase one of the Availbility Zones goes down. In this case the workload deployed on node that went down is migrated to the two other nodes.
+
+- Auto scaling of the worker nodegroup from 3 to a maximum of 5 is done by utilizing the [Cluster Autoscaler Add-on](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md). This allows for automatic scaling out and scaling in based on the requirements of the workload.
+
+
+&ensp;
+
+
+## Cost Optimization:
+
+- By utiziling the AWS Load Balancer Add-on and ingress resources, it allows for the deployed ALB load balancer to be used by multiple deployment instead of the default EKS behaviour which is that each deployment would have a seperate load balancer. This reduces cost significantly.
+
+
+
+&ensp;
+
+
+## Bastion Host:
+
+- Bastion host is intialized using user-data that installs the following tools:
+
+  - kubectl
+  - awscli
+  - helm
+
+
+&ensp;
+&ensp;
+&ensp;
+&ensp;
+&ensp;
+&ensp;
+&ensp;
+
+
+
+# Contents of the Terraform files:
+
+
+## provider.tf
+
+## vpc.tf
+
+- Contains VPC resource and it's configuration
+
+## 
+
+
+
 
 # Deployment Guide for EKS with Configurations
 
