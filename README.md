@@ -2,10 +2,17 @@
 
 click here to go directly to the deployment guide.
 
+&ensp;
+
+&ensp;
+
+&ensp;
+
+&ensp;
+
 
 # Brief of the project and the choices made.
 
-&ensp;
 
 ## Networking
 
@@ -69,11 +76,11 @@ click here to go directly to the deployment guide.
 
 
 &ensp;
+
 &ensp;
+
 &ensp;
-&ensp;
-&ensp;
-&ensp;
+
 &ensp;
 
 
@@ -292,10 +299,48 @@ This configuration deploys and manages worker nodes for an EKS cluster, ensuring
 - These variables provide flexibility and customization options when deploying infrastructure using Terraform. Users can input values for these variables to tailor the configuration to their specific requirements, such as defining the AWS region, subnet CIDR blocks, EKS cluster name, and characteristics of the bastion host.
 
 
+## terraform.tfvars
 
 
+- This Terraform file contains the values for the variables defined in variables.tf, this is where the default values for the variables are set and they can be changed by editing this file.
+
+- There are the default values for the variables: 
+
+    - Sets the AWS region to "eu-west-3."
+    - Specifies a list of availability zones, including "eu-west-3a," "eu-west-3b," and "eu-west-3c."
+    - Defines the CIDR block for the Virtual Private Cloud (VPC) as "10.0.0.0/16."
+    - Provides CIDR blocks for public subnets: "10.0.21.0/24," "10.0.22.0/24," and "10.0.23.0/24."
+    - Specifies CIDR blocks for private subnets: "10.0.1.0/24," "10.0.2.0/24," and "10.0.3.0/24."
+    - Sets the name of the EKS cluster to "eks-cluster."
+    - Defines the AMI name for the bastion host using a wildcard pattern for Ubuntu 22.04 AMIs.
+    - Specifies the instance type for the bastion host as "t2.micro."
+
+    
+- In summary, this configuration creates a VPC with public and private subnets distributed across different availability zones in the "eu-west-3" region. It also sets up an EKS cluster named "eks-cluster" and defines a bastion host with specific AMI and instance type settings.
 
 
+## outputs.tf
+
+
+- This Terraform output configuration:
+
+    - Provides an output named "eks-ingress-role-arn" with the description "This is the IAM Role to be used for the ingress controller add-on." It returns the Amazon Resource Name (ARN) of the IAM role created for the ingress controller. The value is obtained from the aws_iam_role.ingress-eks-role.arn.
+    
+    - Includes an output named "auto-scaler-role-arn" with the description "This is the IAM Role to be used for Cluster Autoscaler add-on." It returns the ARN of the IAM role created for the Cluster Autoscaler. The value is fetched from aws_iam_role.cluster-auto-scaler-role.arn.
+    
+    - Defines an output named "instance_public_ip" providing the description "Public IP address of the EC2 instance." It retrieves the public IP address of the bastion host (EC2 instance) from aws_instance.bastion-host.public_ip.
+
+- In summary, these outputs expose key information such as IAM role ARNs for the add-ons (AWS Load Balancer Controller and Cluster Autoscaler) and the public IP address of the EC2 instance (bastion host) for reference or further use.
+
+
+&ensp;
+
+&ensp;
+
+&ensp;
+&ensp;
+&ensp;
+&ensp;
 
 
 # Deployment Guide for EKS with Configurations
@@ -536,9 +581,12 @@ Example output:
 ```console
 http://k8s-publicloadbalance-1b5f5a824e-999999999.eu-west-3.elb.amazonaws.com
 ```
+&ensp;
 
 &ensp;
+
 &ensp;
+
 &ensp;
 
 
@@ -580,7 +628,13 @@ kubectl scale deployment wordpress --replicas=1
 
 
 &ensp;
+
 &ensp;
+
+&ensp;
+
+&ensp;
+
 
 
 # Resource clean-up guide:
