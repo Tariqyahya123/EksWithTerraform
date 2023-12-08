@@ -517,6 +517,12 @@ Execute the following helm command.
 ```bash
 helm upgrade -i wordpress ./K8s-deployment-files/wordpress-deployment -n default
 ```
+
+
+If you get the following error wait and retry the above command again in 10 seconds.
+```console
+Error: Internal error occurred: failed calling webhook "mservice.elbv2.k8s.aws": failed to call webhook: Post "https://aws-load-balancer-webhook-service.kube-system.svc:443/mutate-v1-service?timeout=10s": dial tcp 10.0.80.69:9443: connect: connection refused
+```
 &ensp;
 
 
@@ -618,7 +624,7 @@ kubectl get nodes --watch
 
 The cluster automatically scales down when the number of replicas can be accomodated by 3 nodes.
 
-Keep in mind the the scale down process takes sometime.
+Keep in mind the the scale down process takes some time.
 
 To scale down the cluster, reduce the replicas of the wordpress deployment to 1 using this command:
 
@@ -662,5 +668,5 @@ Execute this command from the machine where terraform apply was done earlier and
 
 
 ```bash
-terraform destory
+terraform destroy
 ```
