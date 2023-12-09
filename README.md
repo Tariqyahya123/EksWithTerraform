@@ -536,7 +536,7 @@ helm upgrade -i aws-load-balancer-controller ./K8s-deployment-files/aws-load-bal
 Execute the following helm command.
 
 ```bash
-helm upgrade -i wordpress ./K8s-deployment-files/wordpress-deployment -n default
+sleep 3 && helm upgrade -i wordpress ./K8s-deployment-files/wordpress-deployment -n default
 ```
 
 
@@ -544,6 +544,9 @@ If you get the following error wait and retry the above command again in 10 seco
 ```console
 Error: Internal error occurred: failed calling webhook "mservice.elbv2.k8s.aws": failed to call webhook: Post "https://aws-load-balancer-webhook-service.kube-system.svc:443/mutate-v1-service?timeout=10s": dial tcp 10.0.80.69:9443: connect: connection refused
 ```
+
+The 3 second sleep in the above command makes sure to allow enough time for the AWS Load Balancer Controller to be ready.
+
 &ensp;
 
 
