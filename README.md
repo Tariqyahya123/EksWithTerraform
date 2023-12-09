@@ -504,7 +504,7 @@ git clone https://github.com/tariqyahya123/EksWithTerraform.git
 
 ## Step 9: Deploy the eks-auto-scaler helm chart.
 
-Execute the following helm command, replace the value of auto-scaler-role-arn from step 5 in place of "ROLE_ARN_HERE"
+Execute the following helm command, replace the value of auto-scaler-role-arn from step 5 in place of "$ROLE_ARN_HERE"
 
 ```bash
 cd EksWithTerraform
@@ -518,7 +518,7 @@ helm upgrade -i eks-auto-scaler ./K8s-deployment-files/eks-auto-scaler \
 
 ## Step 10: Deploy the aws-load-balancer-controller helm chart.
 
-Execute this helm command, enter the value of the eks-ingress-role noted from step 5 in place of "ROLE_ARN_HERE"
+Execute this helm command, enter the value of the eks-ingress-role noted from step 5 in place of "$ROLE_ARN_HERE"
 
 ```bash
 helm upgrade -i aws-load-balancer-controller ./K8s-deployment-files/aws-load-balancer-controller \
