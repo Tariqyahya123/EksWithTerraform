@@ -524,8 +524,9 @@ Execute this helm command, enter the value of the eks-ingress-role noted from st
 helm upgrade -i aws-load-balancer-controller ./K8s-deployment-files/aws-load-balancer-controller \
   -n kube-system \
   --set clusterName=eks-cluster \
-  --set serviceAccount.annotations.eks\\.amazonaws\\.com\\/role-arn=$ROLE_ARN_HERE \
-  --set serviceAccount.name=aws-load-balancer-controller 
+  --set serviceAccount.name=aws-load-balancer-controller \
+  --set serviceAccount.annotations.eks\\.amazonaws\\.com\\/role-arn=$ROLE_ARN_HERE 
+
 ```
 
 &ensp;
