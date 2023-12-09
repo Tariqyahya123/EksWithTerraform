@@ -398,9 +398,6 @@ This configuration deploys and manages worker nodes for an EKS cluster, ensuring
 
 Follow these steps to deploy EKS with pre-configured settings.
 
-&ensp;
-
-&ensp;
 
 
 
