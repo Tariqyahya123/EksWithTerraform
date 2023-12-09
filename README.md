@@ -690,3 +690,11 @@ Execute this command from the machine where terraform apply was done earlier and
 ```bash
 terraform destroy
 ```
+
+
+
+&ensp;
+
+&ensp;
+
+[Click here to go to table of contents](#table-of-contents)
