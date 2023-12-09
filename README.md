@@ -1,14 +1,10 @@
 # EksWithTerraform
 
-click here to go directly to the deployment guide.
-
-&ensp;
-
-&ensp;
-
-&ensp;
-
-&ensp;
+[Introduction](#deployment-guide-for-eks-with-configurations)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
 
 
 # Brief of the project and the choices made.
