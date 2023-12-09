@@ -26,6 +26,14 @@ This project deploys an Amazon EKS (Elastic Kubernetes Service) cluster using Te
 
 &ensp;
 
+# Architecture Diagram
+
+
+![eks-architecture](https://github.com/Tariqyahya123/EksWithTerraform/blob/main/eks-architecture.png?raw=true)
+
+&ensp;
+
+&ensp;
 
 
 # Brief of the project and the choices made
