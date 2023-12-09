@@ -1,11 +1,31 @@
 # EksWithTerraform
 
+
+# Table of Contents
+
 - [Introduction](#introduction)
 - [Brief of the project and the choices made](#brief-of-the-project-and-the-choices-made)
 - [Contents of the Terraform files](#contents-of-the-terraform-files)
 - [Deployment Guide](#deployment-guide)
 - [Test the autoscaling feature of the cluster](#test-the-autoscaling-feature-of-the-cluster)
 - [Resource clean-up guide](#resource-clean-up-guide)
+
+
+&ensp;
+
+&ensp;
+
+
+# Introduction
+
+This project deploys an Amazon EKS (Elastic Kubernetes Service) cluster using Terraform. The configuration also includes the deployment of a bastion host, Cluster Autoscaler, and AWS Load Balancer Controller for efficient management.
+
+
+
+&ensp;
+
+&ensp;
+
 
 
 # Brief of the project and the choices made
@@ -40,6 +60,9 @@
 
 
 &ensp;
+
+&ensp;
+
 
   
 ## Resiliency and scalability:
