@@ -4,6 +4,7 @@
 # Table of Contents
 
 - [Introduction](#introduction)
+- [Architecture Diagram](#architecture-diagram)
 - [Brief of the project and the choices made](#brief-of-the-project-and-the-choices-made)
 - [Contents of the Terraform files](#contents-of-the-terraform-files)
 - [Deployment Guide](#deployment-guide)
