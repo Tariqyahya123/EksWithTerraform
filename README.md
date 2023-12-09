@@ -684,9 +684,11 @@ kubectl scale deployment wordpress --replicas=1
 Execute this command from the bastion host.
 
 ```bash
-helm uninstall wordpress
+helm uninstall wordpress && \
 
-helm uninstall aws-load-balancer-controller -n kube-system
+sleep 45 && \
+
+helm uninstall aws-load-balancer-controller -n kube-system && \
 
 helm uninstall eks-auto-scaler -n kube-system
 ```
