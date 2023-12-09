@@ -1,13 +1,14 @@
 # EksWithTerraform
 
-[Introduction](#deployment-guide-for-eks-with-configurations)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+- [Introduction](#introduction)
+- [Brief of the project and the choices made](#brief-of-the-project-and-the-choices-made)
+- [Contents of the Terraform files](#contents-of-the-terraform-files)
+- [Deployment Guide](#deployment-guide)
+- [Test the autoscaling feature of the cluster](#test-the-autoscaling-feature-of-the-cluster)
+- [Resource clean-up guide](#resource-clean-up-guide)
 
 
-# Brief of the project and the choices made.
+# Brief of the project and the choices made
 
 
 ## Networking
@@ -81,7 +82,7 @@
 
 
 
-# Contents of the Terraform files:
+# Contents of the Terraform files
 
 
 ## provider.tf
@@ -339,7 +340,7 @@ This configuration deploys and manages worker nodes for an EKS cluster, ensuring
 &ensp;
 
 
-# Deployment Guide for EKS with Configurations
+# Deployment Guide
 
 Follow these steps to deploy EKS with pre-configured settings.
 
@@ -593,7 +594,7 @@ http://k8s-publicloadbalance-1b5f5a824e-999999999.eu-west-3.elb.amazonaws.com
 
 
 
-# Test the autoscaling feature of the cluster.
+# Test the autoscaling feature of the cluster
 &ensp;
 &ensp;
 ## Step 1: Scale out the wordpress deployment to 50 replicas.
@@ -639,7 +640,7 @@ kubectl scale deployment wordpress --replicas=1
 
 
 
-# Resource clean-up guide:
+# Resource clean-up guide
 &ensp;
 
 
