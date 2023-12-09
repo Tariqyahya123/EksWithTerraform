@@ -7,6 +7,7 @@
 - [Architecture Diagram](#architecture-diagram)
 - [Brief of the project and the choices made](#brief-of-the-project-and-the-choices-made)
 - [Contents of the Terraform files](#contents-of-the-terraform-files)
+- [Helm charts used](#helm-charts-used)
 - [Deployment Guide](#deployment-guide)
 - [Test the autoscaling feature of the cluster](#test-the-autoscaling-feature-of-the-cluster)
 - [Resource clean-up guide](#resource-clean-up-guide)
@@ -70,7 +71,6 @@ This project deploys an Amazon EKS (Elastic Kubernetes Service) cluster using Te
 
 &ensp;
 
-&ensp;
 
 
   
@@ -366,10 +366,32 @@ This configuration deploys and manages worker nodes for an EKS cluster, ensuring
 
 &ensp;
 
+# Helm charts used
+
+- All the helm charts that will be used for deployment are contained in the "K8s-deployment-files" directory.
+
+- All these charts are to be deployed from the bastion host.
+
+- These are the charts: 
+
+  ## aws-load-balancer-controller
+
+  - Helm chart used to deploy the AWS Load balancer controller add-on.
+ 
+  ## eks-auto-scaler
+
+  - Helm chart used to deploy the Cluster Autoscaler add-on
+ 
+  ## wordpress-deployment
+
+  - Helm chart used to deploy a wordpress pod along with the required database which is MySql.
+
+  
 &ensp;
-&ensp;
-&ensp;
-&ensp;
+
+&ensp;  
+
+
 
 
 # Deployment Guide
@@ -377,6 +399,7 @@ This configuration deploys and manages worker nodes for an EKS cluster, ensuring
 Follow these steps to deploy EKS with pre-configured settings.
 
 &ensp;
+
 &ensp;
 
 
