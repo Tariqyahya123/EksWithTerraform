@@ -459,7 +459,7 @@ These are values required later.
 &ensp;
 &ensp;
 
-Use this command to output the required data to a file called output.txt
+(OPTIONAL) Use this command to output the required data to a file called output.txt
 
 ```bash
 terraform output | grep -E "auto-scaler-role-arn|eks-ingress-role-arn|instance_public_ip" | awk -F" = " '{gsub(/"/, "", $2); print $2}' > output.txt
