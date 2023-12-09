@@ -555,18 +555,24 @@ The 3 second sleep in the above command makes sure to allow enough time for the 
 This is a bash command that will repeatedly check the status of your ingress load balancer untill it is active and ready to recieve traffic.
 
 ```bash
+echo "Initializing"
+sleep 3  # Wait for 3 seconds
+
 while true; do
-    status=$(aws elbv2 describe-load-balancers --query "LoadBalancers[?starts_with(LoadBalancerName, 'k8s')].State.Code" --output text --region eu-west-3)  # Replace with your actual command
-   if [ -z "$status" ]; then
-        echo "No ingress loadbalancer found."
-        break # Exit the loop if loadbalancer doesn't exist
+    status=$(aws elbv2 describe-load-balancers --query "LoadBalancers[?starts_with(LoadBalancerName, 'k8s')].State.Code" --output text --region eu-west-3)
+
+    if [ -z "$status" ]; then
+        echo "No ingress load balancer found."
+        break  # Exit the loop if the load balancer doesn't exist
     elif [ "$status" = "active" ]; then
-        echo "Ingress loadbalancer is active!"
+        echo "Ingress load balancer is active!"
         break  # Exit the loop when the output is "active"
     fi
+
     echo "Still provisioning"
     sleep 1  # Add a delay to avoid constant checking
 done
+
 ```
 &ensp;
 
@@ -586,6 +592,8 @@ Ingress loadbalancer is active!
 
 
 Make sure region value is adjusted to your requirement if the default region values in the EksWithTerraform/terraform.tfvars were changed.
+
+The 3 seconds of sleep before the rest of the command allows time for the ingress controller deployment to start.
 
 &ensp;
 
